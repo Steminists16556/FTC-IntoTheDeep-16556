@@ -70,7 +70,7 @@ public class driveChassis extends OpMode {
             rightServoDomain.setPosition(0);
             leftServoDomain.setPosition(1);
         }
-
+////
         //Right Bumper for closing claw
         if (gamepad2.right_bumper) {
             rightServoDomain.setPosition(0.06);
