@@ -25,24 +25,11 @@ public class autoRightSide extends LinearOpMode {
 
         waitForStart();
         //Change numbers
-        drive(1, 2000, 0, 0);
-        /*
-        sleep(100);
-        drive(1, 0, -1000, 0);
-        sleep(100);
-        drive(1, -400, 0, 0);
-        drive(1, 400,0, 0);
-        sleep(100);
-        drive(1, 0, 1000, 0);
-        sleep(100);
-        drive(1, -400, 0, 0);
-        sleep(100);
-*/
+        drive(1, 0, 3572, 0);
+        //sleep(100);
     }
 
     public void drive(double power, int forward, int strafe, int turn) {
-        // 2000 ticks = 
-
         //Set modes for motors
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -50,10 +37,10 @@ public class autoRightSide extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //If needed change set power number
-        backLeft.setPower(power * .5);
-        frontLeft.setPower(power * .5);
-        backRight.setPower(power * .5);
-        frontRight.setPower(power * .5);
+        backLeft.setPower(power * .6);
+        frontLeft.setPower(power * .6);
+        backRight.setPower(power * .6);
+        frontRight.setPower(power * .6);
 
         backRight.setTargetPosition(forward + strafe - turn);
         frontRight.setTargetPosition(forward - strafe - turn);
@@ -64,6 +51,8 @@ public class autoRightSide extends LinearOpMode {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        sleep(100);
 
     }
 }

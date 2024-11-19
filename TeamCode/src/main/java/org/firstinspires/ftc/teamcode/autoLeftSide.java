@@ -26,15 +26,15 @@ public class autoLeftSide extends LinearOpMode {
         waitForStart();
         //Change numbers as needed
         drive(1, 1000, 0, 0);
-        sleep(100);
+        //sleep(100);
         drive(1, 0, -3572, 0);
-        sleep(100);
+        //sleep(100);
         drive(1, 0, -3572, 0);
-        sleep(100);
+        //sleep(100);
         drive(1, 0, -3572, 0);
-        sleep(100);
+        //sleep(100);
         drive(1, -200, 0, 0);
-        sleep(100);
+        //sleep(100);
         /*drive(1, 0, -6522, 0);
         sleep(100);
         drive(1, -1786, 0, 0);*/
@@ -64,6 +64,6 @@ public class autoLeftSide extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        sleep(300);
+        sleep(100);
     }
 }
