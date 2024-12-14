@@ -9,35 +9,40 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 public class driveChassis extends OpMode {
 
-//Hardware declarations for chassis motors
+    //Hardware declarations for chassis motors
     DcMotor backLeft;
     DcMotor frontLeft;
     DcMotor backRight;
     DcMotor frontRight;
 
-//Hardware declarations for the arm motors
+
+    //Hardware declarations for the arm motors
     DcMotor upSlider;
     DcMotor verticalSlider;
 
-//Hardware declarations for servos
+    //Hardware declarations for servos
     Servo rightServoDomain;
     Servo leftServoDomain;
     Servo rightServoRange;
     Servo leftServoRange;
 
-    double upTicks = 5281.1;
-    double upTarget;
+    //Hardware declarations for hanging motors
+    DcMotor upLeft;
+    DcMotor upRight;
+
+    double hangTicks = 5281.1;
+    double hangTarget;
 
 
     public void init() {
 
-//Hardware declarations for servos
+        //Hardware declarations for servos
         backLeft = hardwareMap.dcMotor.get("backLeft");
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
         frontRight = hardwareMap.dcMotor.get("frontRight");
 
-//Hardware mapping for arm motors
+        //Hardware mapping for arm motors
         verticalSlider = hardwareMap.dcMotor.get("verticalSlider");
         //verticalSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         upSlider = hardwareMap.dcMotor.get("upSlider");
@@ -45,27 +50,34 @@ public class driveChassis extends OpMode {
         //upSlider.setMode(DcMotor.RunMode.RESET_ENCODERS);
         upSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-// Hardware mapping for servo motors
+        // Hardware mapping for servo motors
         rightServoDomain = hardwareMap.servo.get("rightServoDomain");
         leftServoDomain = hardwareMap.servo.get("leftServoDomain");
         rightServoRange = hardwareMap.servo.get("rightServoRange");
         leftServoRange = hardwareMap.servo.get("leftServoRange");
+
+        //Hardware mapping for hanging
+        upRight = hardwareMap.dcMotor.get("upRight");
+        upLeft = hardwareMap.dcMotor.get("upLeft");
+
     }
 
     //Start of loop
     public void loop() {
 
-//Code for chassis
+        //Code for chassis
         double forward = gamepad1.left_stick_y;
         double strafe = gamepad1.right_stick_x;
         double turn = 0.7 * gamepad1.left_stick_x;
 
-//Code for slider to extend
+        //Code for slider to extend
         double up = -0.5 * gamepad2.left_stick_y;
         double out = 0.8 * gamepad2.right_stick_y;
 
+        double up2 = 0.75 * gamepad1.right_stick_y;
 
-//Power for chassis
+
+        //Power for chassis
         backLeft.setPower(forward + strafe - turn);
         frontLeft.setPower(forward - strafe - turn);
         backRight.setPower(-forward + strafe - turn);
@@ -74,9 +86,12 @@ public class driveChassis extends OpMode {
         //Power for horizontalSlider
         //horizontalSlider.setPower(out);
 
-//Power for verticalSlider
+        //Power for verticalSlider
         verticalSlider.setPower(out);
         upSlider.setPower(up);
+
+        upLeft.setPower(up2);
+        upRight.setPower(-up2);
 
         /*
         //Encoder defining for verticalSlider
@@ -90,7 +105,7 @@ public class driveChassis extends OpMode {
         verticalSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         verticalSlider.setMode(DcMotor.RunMode.RESET_ENCODERS);
 */
-//Encoder mapping for up motor
+        //Encoder mapping for up motor
         //origin
        /* if(gamepad2.dpad_down) {
             full(0.2);
@@ -145,35 +160,48 @@ public class driveChassis extends OpMode {
         }*/
 
         //Servos for lowering claw
-        if (gamepad2.a) {
+      /*  if (gamepad2.a) {
             rightServoRange.setPosition(0.3);
             leftServoRange.setPosition(0.7);
         }
 
+        //Starting position
+        if (gamepad1.a) {
+            full(-.4);
+            full2(.4);
+        }
+
+        //Reaching chamber
+        if (gamepad1.x) {
+            full(-1.70);
+            full2(1.70);
+        }
+
+        //hang
+        if (gamepad1.b) {
+            full(-.3);
+            full2(.3);
+        }
+
     }
-    /*
+
     //End of loop
-    public void max (double turnage) {
-        slider = sliderTicks*turnage;
-        verticalSlider.setTargetPosition((int)sliderTarget);
-        verticalSlider.setPower(1);
-        verticalSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
 
-    public void begin(){
-        verticalSlider.setTargetPosition(0);
-        verticalSlider.setPower(1);
-        verticalSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-*/
-//Ticks for the motor that goes up
-   /* public void full (double turnage) {
-        upTarget = upTicks*turnage;
-        upSlider.setTargetPosition((int)upTarget);
-        upSlider.setPower(.75);
-        upSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-*/
+    public void full(double turnage) {
+        hangTarget = hangTicks * turnage;
+        upLeft.setTargetPosition((int) hangTarget);
+        upLeft.setPower(.75);
+        upLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
+    }
+
+    public void full2(double turnage) {
+        hangTarget = hangTicks * turnage;
+        upRight.setTargetPosition((int) hangTarget);
+        upRight.setPower(.75);
+        upRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }*/
+
+    }
 }

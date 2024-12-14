@@ -18,22 +18,19 @@ public class autoLeftSide extends LinearOpMode {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
         frontRight = hardwareMap.dcMotor.get("frontRight");
-        /*backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
+
 
         waitForStart();
         //Change numbers as needed
-        drive(1, 1000, 0, 0);
+        drive(1, 500, 0, 0);
         //sleep(100);
-        drive(1, 0, -3572, 0);
+        drive(1, 0, -1069, 0);
         //sleep(100);
-        drive(1, 0, -3572, 0);
+        //drive(1, 0, -3572, 0);
         //sleep(100);
-        drive(1, 0, -3572, 0);
+        //drive(1, 0, -3572, 0);
         //sleep(100);
-        drive(1, -200, 0, 0);
+        drive(1, -400, 0, 0);
         //sleep(100);
         /*drive(1, 0, -6522, 0);
         sleep(100);
@@ -64,6 +61,9 @@ public class autoLeftSide extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        while (backLeft.isBusy() && frontLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
+
+        }
         sleep(100);
     }
 }
