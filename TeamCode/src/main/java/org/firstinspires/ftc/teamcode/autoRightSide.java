@@ -13,17 +13,20 @@ public class autoRightSide extends LinearOpMode {
     DcMotor frontRight;
 
     DcMotor upSlider;
+    //DcMotor extendSlider;
 
     Servo rightServoDomain;
     Servo leftServoDomain;
+
+    Servo rightServoRange;
+    Servo leftServoRange;
 
     DcMotor upLeft;
     DcMotor upRight;
 
     //Declaration of ticks for hanging
-    double hangTicks = 5281.1;
-    double hangTarget;
-
+    double liftTicks = 5281.1;
+    double liftTarget;
 
     @Override
     public void runOpMode() {
@@ -39,29 +42,60 @@ public class autoRightSide extends LinearOpMode {
 
         //Hardware mapping for lifting slider
         upSlider = hardwareMap.dcMotor.get("upSlider");
-        upSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        //Hardware mapping for extending slider
+        /*extendSlider = hardwareMap.dcMotor.get("extendSlider");
+        extendSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); */
+
+        //Hardware mapping for servos to open & close claw
         rightServoDomain = hardwareMap.servo.get("rightServoDomain");
         leftServoDomain = hardwareMap.servo.get("leftServoDomain");
 
+        //Hardware mapping for servos to raise & lower claw
+        rightServoRange = hardwareMap.servo.get("rightServoRange");
+        leftServoRange = hardwareMap.servo.get("leftServoRange");
+
+        // Set zero power behaviour
+
+
+
         waitForStart();
-        rightServoDomain.setPosition(0.3);
-        leftServoDomain.setPosition(0.7);
-        //Change numbers
+        //Set claw to starting position
+        //Closed
+        rightServoDomain.setPosition(0.5);
+        leftServoDomain.setPosition(0.5);
+
+        //Strafe robot to the right
         drive(1, 0, -535, 0);
-        drive(1, 1070, 0, 0);
+
+        //Move robot forward
+        drive(1, 1100, 0, 0);
+
+        //Raise slider
         full(0.2);
         sleep(500);
-        drive(1,310,0,0);
-        sleep(200);
 
-        full(0.1);
-        sleep(700);
-        rightServoDomain.setPosition(0);
-        leftServoDomain.setPosition(1);
+        //Lower claw to set the angle straight
+        rightServoRange.setPosition(0.3);
+        leftServoRange.setPosition(0.7);
+        sleep(500);
 
-        drive(1, -1200, 0, 0);
-        drive(1, 0, 2493, 0);
+
+        //Move robot forward to reach low chamber
+        drive(1,350,0,0);
+        sleep(500);
+
+        //Lower slider
+        full(-0.03);
+        sleep(500);
+
+        //Raise Claw - Set claw straight
+        rightServoDomain.setPosition(0.7);
+        leftServoDomain.setPosition(0.3);
+        sleep(500);
+
+        drive(1, -1600, 0, 0);
+        drive(1, 0, 2500, 0);
         sleep(100);
     }
 
@@ -72,8 +106,14 @@ public class autoRightSide extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //Set modes for motors
+        /*backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);/*
 
+        //Set modes for motors
+        upSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         //If needed change set power number
@@ -104,19 +144,12 @@ public class autoRightSide extends LinearOpMode {
     }
 
     public void full(double turnage) {
-        hangTarget = hangTicks * turnage;
-        upSlider.setTargetPosition((int) hangTarget);
+        liftTarget = liftTicks * turnage;
+        upSlider.setTargetPosition((int) liftTarget);
         upSlider.setPower(.45);
         upSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
-
-    /*public void full2(double turnage) {
-        hangTarget = hangTicks * turnage;
-        upRight.setTargetPosition((int) hangTarget);
-        upRight.setPower(.75);
-        upRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }*/
 
 }
 

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
 public class autoLeftSide extends LinearOpMode {
@@ -11,30 +12,49 @@ public class autoLeftSide extends LinearOpMode {
     DcMotor backRight;
     DcMotor frontRight;
 
+    Servo rightServoDomain;
+    Servo leftServoDomain;
+
     @Override
     public void runOpMode() {
-        // Hardware mapping for chassis motors
         backLeft = hardwareMap.dcMotor.get("backLeft");
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
         frontRight = hardwareMap.dcMotor.get("frontRight");
 
+        //Hardware mapping for lifting slider
+        //upSlider = hardwareMap.dcMotor.get("upSlider");
+        //upSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        rightServoDomain = hardwareMap.servo.get("rightServoDomain");
+        leftServoDomain = hardwareMap.servo.get("leftServoDomain");
+
 
         waitForStart();
+        rightServoDomain.setPosition(0.5);
+        leftServoDomain.setPosition(0.5);
         //Change numbers as needed
-        drive(1, 500, 0, 0);
+        drive(1, 0, 0, 0);
         //sleep(100);
-        drive(1, 0, -1069, 0);
+        //Edit turn
+        drive(1, 0, -1000, 0);
         //sleep(100);
-        //drive(1, 0, -3572, 0);
+        /*
+        drive(1, 0, 0, 350);
         //sleep(100);
-        //drive(1, 0, -3572, 0);
+        drive(1, 10, 0, 0);
         //sleep(100);
-        drive(1, -400, 0, 0);
+        rightServoDomain.setPosition(0);
+        leftServoDomain.setPosition(1);
         //sleep(100);
-        /*drive(1, 0, -6522, 0);
+        rightServoDomain.setPosition(0.3);
+        leftServoDomain.setPosition(0.7);
+        drive(1, 150, 0, 0);
+        //sleep(100);
+        drive(1, 1000, 0, 0);
         sleep(100);
-        drive(1, -1786, 0, 0);*/
+        //Edit turn
+        drive(1, 0, 20, 350);*/
 
     }
 

@@ -18,7 +18,7 @@ public class driveChassis extends OpMode {
 
     //Hardware declarations for the arm motors
     DcMotor upSlider;
-    DcMotor verticalSlider;
+    DcMotor extendSlider;
 
     //Hardware declarations for servos
     Servo rightServoDomain;
@@ -43,8 +43,8 @@ public class driveChassis extends OpMode {
         frontRight = hardwareMap.dcMotor.get("frontRight");
 
         //Hardware mapping for arm motors
-        verticalSlider = hardwareMap.dcMotor.get("verticalSlider");
-        //verticalSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        extendSlider = hardwareMap.dcMotor.get("extendSlider");
+        //extendSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         upSlider = hardwareMap.dcMotor.get("upSlider");
         //upSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //upSlider.setMode(DcMotor.RunMode.RESET_ENCODERS);
@@ -86,24 +86,24 @@ public class driveChassis extends OpMode {
         //Power for horizontalSlider
         //horizontalSlider.setPower(out);
 
-        //Power for verticalSlider
-        verticalSlider.setPower(out);
+        //Power for extendSlider
+        extendSlider.setPower(out);
         upSlider.setPower(up);
 
         upLeft.setPower(up2);
         upRight.setPower(-up2);
 
         /*
-        //Encoder defining for verticalSlider
+        //Encoder defining for extendSlider
         double sliderTicks = 860.32;
         double sliderTarget;
 
 
-        //Encoder for verticalSlider
-        verticalSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        verticalSlider.setDirection(DcMotorSimple.Direction.REVERSE);
-        verticalSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        verticalSlider.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        //Encoder for extendSlider
+        extendSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        extendSlider.setDirection(DcMotorSimple.Direction.REVERSE);
+        extendSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        extendSlider.setMode(DcMotor.RunMode.RESET_ENCODERS);
 */
         //Encoder mapping for up motor
         //origin
@@ -128,24 +128,18 @@ public class driveChassis extends OpMode {
         //Servos for opening and closing the claw
         //Left Bumper for opening claw
         if (gamepad2.left_bumper) {
-            rightServoDomain.setPosition(0);
-            leftServoDomain.setPosition(1);
+            rightServoDomain.setPosition(0.1);
+            leftServoDomain.setPosition(0.9);
         }
 
         //Right Bumper for closing claw
         if (gamepad2.right_bumper) {
-            rightServoDomain.setPosition(0.3);
-            leftServoDomain.setPosition(0.7);
+            rightServoDomain.setPosition(0.5);
+            leftServoDomain.setPosition(0.5);
         }
 
         //Servos for moving the claw up and down
-        //Servos for lifting claw
-        /*if (gamepad2.x) {
-            rightServoRange.setPosition(0);
-            leftServoRange.setPosition(0);
-        }
-        */
-        //Servos for setting claw straight
+        //Servos for setting claw
         if (gamepad2.b) {
             rightServoRange.setPosition(0.5);
             //rightServoRange.setDirection(Servo.Direction.REVERSE);
@@ -154,13 +148,13 @@ public class driveChassis extends OpMode {
         }
 
         //Servos for raising claw
-        /*if (gamepad2.y) {
+        if (gamepad2.y) {
             rightServoRange.setPosition(0.7);
             leftServoRange.setPosition(0.3);
-        }*/
+        }
 
         //Servos for lowering claw
-      /*  if (gamepad2.a) {
+        if (gamepad2.a) {
             rightServoRange.setPosition(0.3);
             leftServoRange.setPosition(0.7);
         }
@@ -169,6 +163,24 @@ public class driveChassis extends OpMode {
         if (gamepad1.a) {
             full(-.4);
             full2(.4);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         //Reaching chamber
@@ -201,7 +213,7 @@ public class driveChassis extends OpMode {
         upRight.setTargetPosition((int) hangTarget);
         upRight.setPower(.75);
         upRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }*/
-
     }
+
 }
+
